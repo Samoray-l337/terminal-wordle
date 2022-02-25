@@ -3,17 +3,9 @@
 import curses
 from time import sleep
 
-from config import *
+from src.utils.screen import apply_color_pair, close_screen_settings, remove_color_pair, start_screen_settings
 
-
-def start_screen_settings(stdscr: 'curses._CursesWindow'):
-    curses.curs_set(0)
-
-    return stdscr.getmaxyx()
-
-
-def close_screen_settings():
-    curses.curs_set(1)
+from src.config import *
 
 
 def create_top_bar(stdscr: 'curses._CursesWindow', screen_size, text):
@@ -22,14 +14,17 @@ def create_top_bar(stdscr: 'curses._CursesWindow', screen_size, text):
     x = w // 2 - len(text) // 2
     y = 0
 
+    apply_color_pair(stdscr, TOP_BAR_COLOR_PAIR_INDEX)
     stdscr.addstr(y, x, text)
+    remove_color_pair(stdscr, TOP_BAR_COLOR_PAIR_INDEX)
+
     stdscr.refresh()
 
 
 def main(stdscr: 'curses._CursesWindow'):
-    height, width = start_screen_settings(stdscr)
+    screen_size = start_screen_settings(stdscr)
 
-    create_top_bar(stdscr, (height, width), TOP_BAR_TEXT)
+    create_top_bar(stdscr, screen_size, TOP_BAR_TEXT)
 
     sleep(100)
 
