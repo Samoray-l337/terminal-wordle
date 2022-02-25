@@ -2,7 +2,7 @@
 
 import curses
 
-from src.menu import show_menu
+from src.menu import show_menu, menu_functions
 from src.top_bar import show_top_bar
 
 from src.utils.screen import close_screen_settings, start_screen_settings
@@ -10,9 +10,8 @@ from src.utils.screen import close_screen_settings, start_screen_settings
 from src.config import *
 
 
-def show_selected_menu_option(stdscr: 'curses._CursesWindow', selected_menu_option: int):
-    stdscr.addstr(0, 0, f'you pressed {selected_menu_option}')
-    stdscr.refresh()
+def call_selected_menu_option(stdscr: 'curses._CursesWindow', selected_row_index: int):
+    return menu_functions[selected_row_index](stdscr)
 
 
 def main(stdscr: 'curses._CursesWindow'):
@@ -37,7 +36,7 @@ def main(stdscr: 'curses._CursesWindow'):
             if selected_menu_option == 'Exit':
                 break
 
-            show_selected_menu_option(stdscr, selected_menu_option)
+            call_selected_menu_option(stdscr, current_selected_row)
             continue
 
         show_top_bar(stdscr, screen_size)
