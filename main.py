@@ -34,10 +34,10 @@ def main(stdscr: 'curses._CursesWindow'):
         elif pressed_key in ENTER_KEY_OPTIONS:
             selected_menu_option = MENU_OPTIONS[current_selected_row]
 
-            show_selected_menu_option(stdscr, selected_menu_option)
             if selected_menu_option == 'Exit':
                 break
 
+            show_selected_menu_option(stdscr, selected_menu_option)
             continue
 
         show_top_bar(stdscr, screen_size)
