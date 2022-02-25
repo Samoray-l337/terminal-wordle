@@ -1,0 +1,1 @@
+TOP_BAR_TEXT = 'Test application'
