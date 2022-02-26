@@ -1,3 +1,3 @@
-# Python implementation of the populaer game Wordle, now inside the terminal
+# terminal-wordle
 
 Under development!!!!
