@@ -13,15 +13,14 @@ from ..config import BOARD_SIZE
 
 from ..utils.game import draw_game_board
 
-# TODO: allow more keys to leave the level
-is_escape_pressed = False
+back_to_home = False
 
 
 def handle_key_pressed(key):
-    global is_escape_pressed
+    global back_to_home
 
     if key == Key.backspace:
-        is_escape_pressed = True
+        back_to_home = True
 
 
 def generate_random_2d_array_of_letters(size):
@@ -29,7 +28,7 @@ def generate_random_2d_array_of_letters(size):
 
 
 def home(stdscr: 'curses._CursesWindow'):
-    global is_escape_pressed
+    global back_to_home
 
     listener = Listener(on_press=handle_key_pressed)
     listener.start()
@@ -39,8 +38,8 @@ def home(stdscr: 'curses._CursesWindow'):
     while True:
         stdscr.clear()
 
-        if is_escape_pressed:
-            is_escape_pressed = False
+        if back_to_home:
+            back_to_home = False
             break
 
         array = generate_random_2d_array_of_letters(BOARD_SIZE)
