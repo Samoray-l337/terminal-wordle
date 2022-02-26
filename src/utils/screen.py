@@ -19,8 +19,6 @@ def start_screen_settings(stdscr: 'curses._CursesWindow'):
 
     init_color_pairs()
 
-    return stdscr.getmaxyx()
-
 
 def close_screen_settings():
     curses.curs_set(1)

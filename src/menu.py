@@ -1,15 +1,15 @@
 import curses
 
-from .pages import home, play, scoreboard
+from .pages import help, home, play
 from .utils.screen import apply_color_pair, remove_color_pair
 from .config import MENU_COLOR_PAIR_INDEX, MENU_OPTIONS, MENU_SELECTED_COLOR_PAIR_INDEX
 
 
-menu_functions = [home.home, play.play, scoreboard.scoreboard]
+menu_functions = [home.home, play.play, help.help]
 
 
-def show_menu(stdscr: 'curses._CursesWindow', screen_size, selected_row_index=0):
-    h, w = screen_size
+def show_menu(stdscr: 'curses._CursesWindow', selected_row_index=0):
+    h, w = stdscr.getmaxyx()
 
     apply_color_pair(stdscr, MENU_COLOR_PAIR_INDEX)
 

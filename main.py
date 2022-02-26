@@ -15,10 +15,10 @@ def call_selected_menu_option(stdscr: 'curses._CursesWindow', selected_row_index
 
 
 def main(stdscr: 'curses._CursesWindow'):
-    screen_size = start_screen_settings(stdscr)
+    start_screen_settings(stdscr)
 
-    show_top_bar(stdscr, screen_size)
-    show_menu(stdscr, screen_size)
+    show_top_bar(stdscr)
+    show_menu(stdscr)
 
     current_selected_row = 0
 
@@ -39,8 +39,8 @@ def main(stdscr: 'curses._CursesWindow'):
             call_selected_menu_option(stdscr, current_selected_row)
             continue
 
-        show_top_bar(stdscr, screen_size)
-        show_menu(stdscr, screen_size, current_selected_row)
+        show_top_bar(stdscr)
+        show_menu(stdscr, current_selected_row)
 
     close_screen_settings()
 
