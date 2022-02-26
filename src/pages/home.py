@@ -7,6 +7,8 @@ from pynput.keyboard import Key, Listener
 from random import choice
 from string import ascii_letters
 
+from ..top_bar import draw_top_bar
+
 from ..config import BOARD_SIZE
 
 from ..utils.game import draw_game_board
@@ -43,6 +45,8 @@ def home(stdscr: 'curses._CursesWindow'):
 
         array = generate_random_2d_array_of_letters(BOARD_SIZE)
         draw_game_board(stdscr, array)
+
+        draw_top_bar(stdscr)
 
         stdscr.refresh()
         sleep(0.5)
