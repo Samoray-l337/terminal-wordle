@@ -1,1 +1,1 @@
-# Python implementation of the populaer game Wordle, Now inside the terminal
+# Python implementation of the populaer game Wordle, now inside the terminal
