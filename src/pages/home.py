@@ -33,8 +33,6 @@ def home(stdscr: 'curses._CursesWindow'):
     listener = Listener(on_press=handle_key_pressed)
     listener.start()
 
-    stdscr.clear()
-
     while True:
         stdscr.clear()
 
