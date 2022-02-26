@@ -4,7 +4,7 @@ from .utils.screen import apply_color_pair, remove_color_pair
 
 from .config import TOP_BAR_COLOR_PAIR_INDEX, TOP_BAR_TEXT
 
-def show_top_bar(stdscr: 'curses._CursesWindow'):
+def draw_top_bar(stdscr: 'curses._CursesWindow'):
     _, w = stdscr.getmaxyx()
 
     x = w // 2 - len(TOP_BAR_TEXT) // 2
