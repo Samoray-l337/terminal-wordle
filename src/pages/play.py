@@ -1,6 +1,7 @@
 import curses
 
 import curses
+from string import ascii_letters
 
 from time import sleep
 
@@ -35,7 +36,7 @@ def play(stdscr: 'curses._CursesWindow'):
             game_board[current_word][current_letter] = ' '
             if current_letter < 0:
                 current_letter = 0
-        else:
+        elif pressed_key in [ord(letter) for letter in ascii_letters]:
             game_board[current_word][current_letter] = chr(pressed_key)
 
             current_letter += 1
