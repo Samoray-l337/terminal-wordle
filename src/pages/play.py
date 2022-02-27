@@ -4,24 +4,10 @@ import curses
 
 from time import sleep
 
-from pynput.keyboard import Key, Listener
-
 from ..config import BOARD_SIZE
 from ..utils.game import draw_game_board
 
 from ..top_bar import draw_top_bar
-
-back_to_home = False
-
-
-def handle_key_pressed(key):
-    global back_to_home
-
-    try:
-        if key == Key.backspace or key.char == 'q':
-            back_to_home = True
-    except AttributeError as e:
-        pass
 
 
 def generate_empty_game_board_array(size):
@@ -29,24 +15,38 @@ def generate_empty_game_board_array(size):
 
 
 def play(stdscr: 'curses._CursesWindow'):
-    global back_to_home
+    game_board = generate_empty_game_board_array(BOARD_SIZE)
 
-    listener = Listener(on_press=handle_key_pressed)
-    listener.start()
+    current_word = 0
+    current_letter = 0
+
+    draw_game_board(stdscr, game_board)
+    draw_top_bar(stdscr)
 
     while True:
+        pressed_key = stdscr.getch()
         stdscr.clear()
 
-        if back_to_home:
-            back_to_home = False
+        if pressed_key == ord('q'):
             break
+        elif pressed_key == curses.KEY_BACKSPACE:
+            current_letter -= 1
 
-        game_board = generate_empty_game_board_array(BOARD_SIZE)
+            game_board[current_word][current_letter] = ' '
+            if current_letter < 0:
+                current_letter = 0
+        else:
+            game_board[current_word][current_letter] = chr(pressed_key)
+
+            current_letter += 1
+            if current_letter >= BOARD_SIZE:
+                current_word += 1
+                current_letter = 0
+
+            if current_word >= BOARD_SIZE:
+                break # End of the level, show score or something
+
         draw_game_board(stdscr, game_board)
-
         draw_top_bar(stdscr)
 
         stdscr.refresh()
-        sleep(0.2)
-
-    listener.stop()
