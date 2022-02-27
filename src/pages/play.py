@@ -6,13 +6,13 @@ from string import ascii_letters
 from time import sleep
 
 from ..config import BOARD_SIZE
-from ..utils.game import draw_game_board
+from ..utils.game import draw_game_board, generate_game_element
 
 from ..top_bar import draw_top_bar
 
 
 def generate_empty_game_board_array(size):
-    return [[' ' for _ in range(size)] for _ in range(size)]
+    return [[generate_game_element(' ') for _ in range(size)] for _ in range(size)]
 
 
 def play(stdscr: 'curses._CursesWindow'):
@@ -33,11 +33,14 @@ def play(stdscr: 'curses._CursesWindow'):
         elif pressed_key == curses.KEY_BACKSPACE:
             current_letter -= 1
 
-            game_board[current_word][current_letter] = ' '
+            game_board[current_word][current_letter] = generate_game_element(' ')
             if current_letter < 0:
                 current_letter = 0
         elif pressed_key in [ord(letter) for letter in ascii_letters]:
-            game_board[current_word][current_letter] = chr(pressed_key)
+            pressed_letter = chr(pressed_key)
+
+            # TODO: check if the letter is correct and display it ( after the all word is inserted )
+            game_board[current_word][current_letter] = generate_game_element(pressed_letter, False, False)
 
             current_letter += 1
             if current_letter >= BOARD_SIZE:
@@ -45,7 +48,7 @@ def play(stdscr: 'curses._CursesWindow'):
                 current_letter = 0
 
             if current_word >= BOARD_SIZE:
-                break # End of the level, show score or something
+                break  # End of the level, show score or something
 
         draw_game_board(stdscr, game_board)
         draw_top_bar(stdscr)
