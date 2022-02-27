@@ -11,5 +11,5 @@ MENU_OPTIONS = ['Home', 'Play', 'Help', 'Exit']
 ENTER_KEY_OPTIONS = [10, 13, 343]
 
 # Game settings:
-TILE_SIZE = 3
+TILE_SIZE = 3 # make sure its odd
 BOARD_SIZE = 5
