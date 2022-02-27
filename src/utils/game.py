@@ -10,8 +10,8 @@ def draw_square(stdscr: 'curses._CursesWindow', i, j, value, board_size):
 
     apply_color_pair(stdscr, MENU_SELECTED_COLOR_PAIR_INDEX)
 
-    x = (width // 2) - (board_size * (TILE_SIZE - i))
-    y = (height // 2) - (board_size // 2 + (j * 2)) + board_size + 1
+    x = int((width / 2) - TILE_SIZE * (board_size - 0.5 - 2 * i))
+    y = int((height / 2) - (board_size - 0.5 - 2 * j))
 
     if y < 0 or x < 0 or x > width or y > height:
         raise Exception('board can\'t fit inside terminal size')
