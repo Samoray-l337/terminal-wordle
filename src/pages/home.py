@@ -47,3 +47,5 @@ def home(stdscr: 'curses._CursesWindow'):
 
         stdscr.refresh()
         sleep(0.5)
+
+    listener.stop()

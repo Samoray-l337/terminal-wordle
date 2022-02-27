@@ -38,3 +38,5 @@ def play(stdscr: 'curses._CursesWindow'):
 
         stdscr.refresh()
         sleep(0.2)
+
+    listener.stop()

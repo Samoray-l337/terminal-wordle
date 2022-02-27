@@ -8,7 +8,7 @@ from ..top_bar import draw_top_bar
 
 back_to_home = False
 
-
+# TODO: export this function to another file and use it
 def handle_key_pressed(key):
     global back_to_home
 
@@ -36,3 +36,5 @@ def help(stdscr: 'curses._CursesWindow'):
 
         stdscr.refresh()
         sleep(0.2)
+
+    listener.stop()
