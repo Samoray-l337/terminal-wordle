@@ -37,6 +37,10 @@ def main(stdscr: 'curses._CursesWindow'):
                 break
 
             call_selected_menu_option(stdscr, current_selected_row)
+
+            # Show the menu and top-bar after returning from called function
+            draw_top_bar(stdscr)
+            show_menu(stdscr, current_selected_row)
             continue
 
         draw_top_bar(stdscr)
