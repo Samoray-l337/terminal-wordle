@@ -6,6 +6,9 @@ from time import sleep
 
 from pynput.keyboard import Key, Listener
 
+from ..config import BOARD_SIZE
+from ..utils.game import draw_game_board
+
 from ..top_bar import draw_top_bar
 
 back_to_home = False
@@ -14,8 +17,15 @@ back_to_home = False
 def handle_key_pressed(key):
     global back_to_home
 
-    if key == Key.backspace:
-        back_to_home = True
+    try:
+        if key == Key.backspace or key.char == 'q':
+            back_to_home = True
+    except AttributeError as e:
+        pass
+
+
+def generate_empty_game_board_array(size):
+    return [[' ' for _ in range(size)] for _ in range(size)]
 
 
 def play(stdscr: 'curses._CursesWindow'):
@@ -31,8 +41,8 @@ def play(stdscr: 'curses._CursesWindow'):
             back_to_home = False
             break
 
-        stdscr.addstr(0, 0, 'Play')
-        stdscr.refresh()
+        game_board = generate_empty_game_board_array(BOARD_SIZE)
+        draw_game_board(stdscr, game_board)
 
         draw_top_bar(stdscr)
 

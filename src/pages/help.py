@@ -12,8 +12,11 @@ back_to_home = False
 def handle_key_pressed(key):
     global back_to_home
 
-    if key == Key.backspace:
-        back_to_home = True
+    try:
+        if key == Key.backspace or key.char == 'q':
+            back_to_home = True
+    except AttributeError as e:
+        pass
 
 
 def help(stdscr: 'curses._CursesWindow'):
