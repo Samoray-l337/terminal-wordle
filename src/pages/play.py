@@ -1,7 +1,7 @@
 import curses
 
 import curses
-from string import ascii_letters
+from string import ascii_lowercase
 
 from ..config import BOARD_SIZE, CHOSEN_WORD, ENTER_KEY_OPTIONS
 from ..utils.game import draw_game_board, generate_game_element, get_word_letters_marked
@@ -36,7 +36,7 @@ def play(stdscr: 'curses._CursesWindow'):
             game_board[current_word][current_letter] = generate_game_element(' ')
             if current_letter < 0:
                 current_letter = 0
-        elif pressed_key in [ord(letter) for letter in ascii_letters]:
+        elif pressed_key in [ord(letter) for letter in ascii_lowercase]:
             if current_letter >= BOARD_SIZE:
                 draw_game_board(stdscr, game_board)
                 draw_top_bar(stdscr)
