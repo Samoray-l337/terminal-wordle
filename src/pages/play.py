@@ -3,10 +3,8 @@ import curses
 import curses
 from string import ascii_letters
 
-from time import sleep
-
-from ..config import BOARD_SIZE
-from ..utils.game import draw_game_board, generate_game_element
+from ..config import BOARD_SIZE, ENTER_KEY_OPTIONS
+from ..utils.game import draw_game_board, generate_game_element, get_word_letters_marked
 
 from ..top_bar import draw_top_bar
 
@@ -28,27 +26,35 @@ def play(stdscr: 'curses._CursesWindow'):
         pressed_key = stdscr.getch()
         stdscr.clear()
 
+        # TODO: q letter for leaveing the level + q inside a word
         if pressed_key == ord('q'):
             break
-        elif pressed_key == curses.KEY_BACKSPACE:
+
+        if pressed_key == curses.KEY_BACKSPACE:
             current_letter -= 1
 
             game_board[current_word][current_letter] = generate_game_element(' ')
             if current_letter < 0:
                 current_letter = 0
         elif pressed_key in [ord(letter) for letter in ascii_letters]:
-            pressed_letter = chr(pressed_key)
-
-            # TODO: check if the letter is correct and display it ( after the all word is inserted )
-            game_board[current_word][current_letter] = generate_game_element(pressed_letter, False, False)
-
-            current_letter += 1
             if current_letter >= BOARD_SIZE:
+                draw_game_board(stdscr, game_board)
+                draw_top_bar(stdscr)
+                continue
+
+            pressed_letter = chr(pressed_key)
+            game_board[current_word][current_letter] = generate_game_element(pressed_letter, False, False)
+            current_letter += 1
+        elif pressed_key in ENTER_KEY_OPTIONS:
+            if current_letter == BOARD_SIZE:
+                curr_word_marked = get_word_letters_marked(game_board[current_word], chosen_word='abcde')
+                game_board[current_word] = curr_word_marked
+
                 current_word += 1
                 current_letter = 0
 
-            if current_word >= BOARD_SIZE:
-                break  # End of the level, show score or something
+            if current_word == BOARD_SIZE:
+                break
 
         draw_game_board(stdscr, game_board)
         draw_top_bar(stdscr)
