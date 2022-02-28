@@ -28,7 +28,10 @@ def draw_square(stdscr: 'curses._CursesWindow', i, j, element, board_size):
         raise Exception('board can\'t fit inside terminal size')
 
     stdscr.addstr(y, x, f' {value} ')
+    
     remove_color_pair(stdscr, MENU_SELECTED_COLOR_PAIR_INDEX)
+    remove_color_pair(stdscr, CORRECT_LETTER_COLOR_PAIR_INDEX)
+    remove_color_pair(stdscr, EXISTS_LETTER_COLOR_PAIR_INDEX)
 
 
 def draw_game_board(stdscr: 'curses._CursesWindow', game_board):
