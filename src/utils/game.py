@@ -13,6 +13,34 @@ def pad_letter_with_spaces_to_match_tile_size(letter: str):
     return letter.center(TILE_SIZE)
 
 
+def get_counting_dict(word):
+    return {item: word.count(item) for item in set(word)}
+
+
+def get_word_letters_marked(word_letters_elements, chosen_word):
+    marked_word_letters = []
+
+    word_letters = [element['value'] for element in word_letters_elements]
+    letters_count_in_chosen_word = get_counting_dict(chosen_word)
+
+    for i in range(len(word_letters)):
+        letter = word_letters[i]
+        is_correct = False
+        is_exists = False
+
+        if letter == chosen_word[i] and letters_count_in_chosen_word[letter] > 0:
+            is_correct = True
+            letters_count_in_chosen_word[letter] -= 1
+        elif letter in chosen_word and letters_count_in_chosen_word[letter] > 0:
+            is_exists = True
+            letters_count_in_chosen_word[letter] -= 1
+
+        marked_letter = generate_game_element(letter, is_correct, is_exists)
+        marked_word_letters.append(marked_letter)
+
+    return marked_word_letters
+
+
 def draw_square(stdscr: 'curses._CursesWindow', i, j, element, board_size):
     height, width = stdscr.getmaxyx()
 
