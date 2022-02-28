@@ -4,7 +4,7 @@ from ..config import CORRECT_LETTER_COLOR_PAIR_INDEX, EXISTS_LETTER_COLOR_PAIR_I
 
 from .screen import apply_color_pair, remove_color_pair
 
-
+# check for typos + support highlight in red color if incorrect
 def generate_game_element(letter, is_correct=False, is_exists=False):
     return {'value': letter, 'is_correct': is_correct, 'is_exists': is_exists}
 
