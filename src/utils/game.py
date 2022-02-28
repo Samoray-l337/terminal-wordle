@@ -9,6 +9,10 @@ def generate_game_element(letter, is_correct=False, is_exists=False):
     return {'value': letter, 'is_correct': is_correct, 'is_exists': is_exists}
 
 
+def pad_letter_with_spaces_to_match_tile_size(letter: str):
+    return letter.center(TILE_SIZE)
+
+
 def draw_square(stdscr: 'curses._CursesWindow', i, j, element, board_size):
     height, width = stdscr.getmaxyx()
 
@@ -27,8 +31,9 @@ def draw_square(stdscr: 'curses._CursesWindow', i, j, element, board_size):
     if y < 0 or x < 0 or x > width or y > height:
         raise Exception('board can\'t fit inside terminal size')
 
-    stdscr.addstr(y, x, f' {value} ')
-    
+    padded_letter = pad_letter_with_spaces_to_match_tile_size(value)
+    stdscr.addstr(y, x, padded_letter)
+
     remove_color_pair(stdscr, MENU_SELECTED_COLOR_PAIR_INDEX)
     remove_color_pair(stdscr, CORRECT_LETTER_COLOR_PAIR_INDEX)
     remove_color_pair(stdscr, EXISTS_LETTER_COLOR_PAIR_INDEX)
