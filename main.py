@@ -49,4 +49,4 @@ if __name__ == "__main__":
     try:
         curses.wrapper(main)
     except KeyboardInterrupt as e:
-        pass
+        close_screen_settings()
