@@ -5,6 +5,9 @@ from ..config import MENU_SELECTED_COLOR_PAIR_INDEX, TILE_SIZE
 from .screen import apply_color_pair, remove_color_pair
 
 
+def pad_letter_with_spaces_to_match_tile_size(letter: str):
+    return letter.center(TILE_SIZE)
+
 def draw_square(stdscr: 'curses._CursesWindow', i, j, value, board_size):
     height, width = stdscr.getmaxyx()
 
@@ -16,7 +19,8 @@ def draw_square(stdscr: 'curses._CursesWindow', i, j, value, board_size):
     if y < 0 or x < 0 or x > width or y > height:
         raise Exception('board can\'t fit inside terminal size')
 
-    stdscr.addstr(y, x, f' {value} ')
+    padded_letter = pad_letter_with_spaces_to_match_tile_size(value)
+    stdscr.addstr(y, x, padded_letter)
     remove_color_pair(stdscr, MENU_SELECTED_COLOR_PAIR_INDEX)
 
 
