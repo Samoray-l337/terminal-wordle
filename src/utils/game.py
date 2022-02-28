@@ -28,7 +28,7 @@ def draw_square(stdscr: 'curses._CursesWindow', i, j, element, board_size):
     x = int((width / 2) - TILE_SIZE * (board_size - 0.5 - 2 * i))
     y = int((height / 2) - (board_size - 0.5 - 2 * j))
 
-    if y < 0 or x < 0 or x > width or y > height:
+    if y <= 0 or x <= 0 or x >= width or y >= height:
         raise Exception('board can\'t fit inside terminal size')
 
     padded_letter = pad_letter_with_spaces_to_match_tile_size(value)
