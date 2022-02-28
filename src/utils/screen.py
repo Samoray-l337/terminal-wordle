@@ -12,6 +12,15 @@ def init_color_pairs():
 
     curses.init_pair(MENU_SELECTED_COLOR_PAIR_INDEX,
                      curses.COLOR_BLACK, curses.COLOR_WHITE)
+                     
+    curses.init_pair(NORMAL_LETTER_COLOR_PAIR_INDEX,
+                     curses.COLOR_BLACK, curses.COLOR_WHITE)
+                     
+    curses.init_pair(CORRECT_LETTER_COLOR_PAIR_INDEX,
+                     curses.COLOR_BLACK, curses.COLOR_GREEN)
+
+    curses.init_pair(EXISTS_LETTER_COLOR_PAIR_INDEX,
+                     curses.COLOR_BLACK, curses.COLOR_YELLOW)
 
 
 def start_screen_settings(stdscr: 'curses._CursesWindow'):

@@ -11,7 +11,7 @@ from ..top_bar import draw_top_bar
 
 from ..config import BOARD_SIZE
 
-from ..utils.game import draw_game_board
+from ..utils.game import draw_game_board, generate_game_element
 
 back_to_home = False
 
@@ -26,8 +26,12 @@ def handle_key_pressed(key):
         pass
 
 
-def generate_random_2d_array_of_letters(size):
-    return [[choice(ascii_letters) for _ in range(size)] for _ in range(size)]
+def get_random_boolean():
+    return choice([False, True])
+
+
+def generate_random_letters_gameboard(size):
+    return [[generate_game_element(choice(ascii_letters), get_random_boolean(), get_random_boolean()) for _ in range(size)] for _ in range(size)]
 
 
 def home(stdscr: 'curses._CursesWindow'):
@@ -43,7 +47,7 @@ def home(stdscr: 'curses._CursesWindow'):
             back_to_home = False
             break
 
-        array = generate_random_2d_array_of_letters(BOARD_SIZE)
+        array = generate_random_letters_gameboard(BOARD_SIZE)
         draw_game_board(stdscr, array)
 
         draw_top_bar(stdscr)
