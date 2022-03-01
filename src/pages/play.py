@@ -3,6 +3,8 @@ import curses
 import curses
 from string import ascii_lowercase
 
+from ..utils.words import does_word_exists_inside_words_list
+
 from ..config import BOARD_SIZE, CHOSEN_WORD, ENTER_KEY_OPTIONS
 from ..utils.game import draw_game_board, generate_game_element, get_word_letters_marked
 
@@ -38,6 +40,7 @@ def play(stdscr: 'curses._CursesWindow'):
                 current_letter = 0
         elif pressed_key in [ord(letter) for letter in ascii_lowercase]:
             if current_letter >= BOARD_SIZE:
+                # TODO: before every continue we need to call these 2 functions, fix this
                 draw_game_board(stdscr, game_board)
                 draw_top_bar(stdscr)
                 continue
@@ -47,6 +50,12 @@ def play(stdscr: 'curses._CursesWindow'):
             current_letter += 1
         elif pressed_key in ENTER_KEY_OPTIONS:
             if current_letter == BOARD_SIZE:
+                curr_word = ''.join([element['value'] for element in game_board[current_word]])
+                if not does_word_exists_inside_words_list(curr_word):
+                    draw_game_board(stdscr, game_board)
+                    draw_top_bar(stdscr)
+                    continue
+                
                 curr_word_marked = get_word_letters_marked(game_board[current_word], chosen_word=CHOSEN_WORD)
                 game_board[current_word] = curr_word_marked
 
