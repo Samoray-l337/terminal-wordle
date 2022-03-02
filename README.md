@@ -1,16 +1,13 @@
 # terminal-wordle
 
+## Under develpoment !!!
+
 <div align="center">
-
-# wordle
-
-**Wordle, inside the terminal.**
-
-<img align="right" alt="Showcase" width="50%" src="showcase.png" />
-
+  **Wordle, inside the terminal.**
+  <img align="right" alt="Showcase" width="50%" src="showcase.png" />
 </div>
 
-## How to play
+## Game rules!
 
 You have 5 attempts to guess the correct word.
 Each guess must be a valid english word.
