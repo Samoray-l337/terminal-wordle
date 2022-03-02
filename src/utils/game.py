@@ -41,7 +41,7 @@ def get_word_letters_marked(word_letters_elements, chosen_word):
     return marked_word_letters
 
 
-def draw_square(stdscr: 'curses._CursesWindow', i, j, element, board_size):
+def draw_square(stdscr: 'curses._CursesWindow', i, j, element, board_size, offset):
     height, width = stdscr.getmaxyx()
 
     value, is_correct, is_exists = element['value'], element['is_correct'], element['is_exists']
@@ -53,7 +53,7 @@ def draw_square(stdscr: 'curses._CursesWindow', i, j, element, board_size):
     else:
         apply_color_pair(stdscr, MENU_SELECTED_COLOR_PAIR_INDEX)
 
-    x = int((width / 2) - TILE_SIZE * (board_size - 0.5 - 2 * i))
+    x = int((width / 2) - TILE_SIZE * (board_size - 0.5 - 2 * i)) + offset
     y = int((height / 2) - (board_size - 0.5 - 2 * j))
 
     if y <= 0 or x <= 0 or x >= width or y >= height:
@@ -67,7 +67,7 @@ def draw_square(stdscr: 'curses._CursesWindow', i, j, element, board_size):
     remove_color_pair(stdscr, EXISTS_LETTER_COLOR_PAIR_INDEX)
 
 
-def draw_game_board(stdscr: 'curses._CursesWindow', game_board):
+def draw_game_board(stdscr: 'curses._CursesWindow', game_board, offset = 0):
     for row_index, row in enumerate(game_board):
         for col_index, element in enumerate(row):
-            draw_square(stdscr, col_index, row_index, element, len(game_board))
+            draw_square(stdscr, col_index, row_index, element, len(game_board), offset)
