@@ -9,6 +9,9 @@ from src.utils.screen import close_screen_settings, start_screen_settings
 
 from src.config import *
 
+def draw_main_page(stdscr: 'curses._CursesWindow', current_selected_row):
+    draw_top_bar(stdscr)
+    show_menu(stdscr, current_selected_row)
 
 def call_selected_menu_option(stdscr: 'curses._CursesWindow', selected_row_index: int):
     return menu_functions[selected_row_index](stdscr)
@@ -17,14 +20,13 @@ def call_selected_menu_option(stdscr: 'curses._CursesWindow', selected_row_index
 def main(stdscr: 'curses._CursesWindow'):
     start_screen_settings(stdscr)
 
-    draw_top_bar(stdscr)
-    show_menu(stdscr)
-
     current_selected_row = 0
 
     while True:
-        pressed_key = stdscr.getch()
         stdscr.clear()
+        draw_main_page(stdscr, current_selected_row)
+
+        pressed_key = stdscr.getch()
 
         if pressed_key == curses.KEY_UP:
             current_selected_row = (current_selected_row - 1 + len(MENU_OPTIONS)) % len(MENU_OPTIONS)
@@ -37,14 +39,6 @@ def main(stdscr: 'curses._CursesWindow'):
                 break
 
             call_selected_menu_option(stdscr, current_selected_row)
-
-            # Show the menu and top-bar after returning from called function
-            draw_top_bar(stdscr)
-            show_menu(stdscr, current_selected_row)
-            continue
-
-        draw_top_bar(stdscr)
-        show_menu(stdscr, current_selected_row)
 
     close_screen_settings()
 
