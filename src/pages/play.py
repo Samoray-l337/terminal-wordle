@@ -49,13 +49,11 @@ def play(stdscr: 'curses._CursesWindow'):
                 current_letter = 0
         elif pressed_key in ENTER_KEY_OPTIONS:
             if current_letter == BOARD_SIZE:
-                curr_word = ''.join([element['value']
-                                    for element in game_board[current_word]])
+                curr_word = ''.join([element['value'] for element in game_board[current_word]])
                 if not does_word_exists_inside_words_list(curr_word):
                     continue
 
-                curr_word_marked = get_word_letters_marked(
-                    game_board[current_word], chosen_word=CHOSEN_WORD)
+                curr_word_marked = get_word_letters_marked(game_board[current_word], chosen_word=CHOSEN_WORD)
                 game_board[current_word] = curr_word_marked
 
                 current_word += 1
