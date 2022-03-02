@@ -5,7 +5,7 @@ from string import ascii_lowercase
 
 from ..utils.words import does_word_exists_inside_words_list
 
-from ..config import BOARD_SIZE, CHOSEN_WORD, ENTER_KEY_OPTIONS
+from ..config import BOARD_SIZE, CHOSEN_WORD, CTRL_BACKSPACE_VALUE, ENTER_KEY_OPTIONS
 from ..utils.game import draw_game_board, generate_game_element, get_word_letters_marked
 
 from ..top_bar import draw_top_bar
@@ -31,26 +31,22 @@ def play(stdscr: 'curses._CursesWindow'):
         draw_page(stdscr, game_board)
 
         pressed_key = stdscr.getch()
-
-        # TODO: q letter for leaveing the level + q inside a word
-        if pressed_key == curses.KEY_CLOSE:
+        if pressed_key == CTRL_BACKSPACE_VALUE:
             break
 
-        if pressed_key == curses.KEY_BACKSPACE:
-            current_letter -= 1
-
-            game_board[current_word][current_letter] = generate_game_element(
-                ' ')
-            if current_letter < 0:
-                current_letter = 0
-        elif pressed_key in [ord(letter) for letter in ascii_lowercase]:
+        if pressed_key in [ord(letter) for letter in ascii_lowercase]:
             if current_letter >= BOARD_SIZE:
                 continue
 
             pressed_letter = chr(pressed_key)
-            game_board[current_word][current_letter] = generate_game_element(
-                pressed_letter, False, False)
+            game_board[current_word][current_letter] = generate_game_element(pressed_letter, False, False)
             current_letter += 1
+        elif pressed_key == curses.KEY_BACKSPACE:
+            current_letter -= 1
+
+            game_board[current_word][current_letter] = generate_game_element(' ')
+            if current_letter < 0:
+                current_letter = 0
         elif pressed_key in ENTER_KEY_OPTIONS:
             if current_letter == BOARD_SIZE:
                 curr_word = ''.join([element['value']

@@ -17,3 +17,5 @@ After submitting a word, each letter will turn green, yellow, or red.
 - **Green:** The letter is correct, and in the correct position.
 - **Yellow:** The letter is exists in the chosen word, but is in the wrong position.
 - **Red:** The letter is not exists in the chosen word at all.
+
+For more information, go the the help page inside the program!

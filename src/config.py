@@ -11,6 +11,7 @@ MENU_OPTIONS = ['Home', 'Play', 'Help', 'Exit']
 
 # Keys settings:
 ENTER_KEY_OPTIONS = [10, 13, 343]
+CTRL_BACKSPACE_VALUE = 23
 
 # Game settings:
 TILE_SIZE = 3  # make sure its odd
