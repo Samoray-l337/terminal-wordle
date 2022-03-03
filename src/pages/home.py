@@ -15,7 +15,7 @@ from ..utils.game import draw_game_board, generate_game_element
 
 back_to_home = False
 
-
+# TODO: think how to export this function to another file
 def handle_key_pressed(key):
     global back_to_home
 
