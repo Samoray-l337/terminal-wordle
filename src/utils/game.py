@@ -1,12 +1,11 @@
 import curses
 
-from ..config import CORRECT_LETTER_COLOR_PAIR_INDEX, EXISTS_LETTER_COLOR_PAIR_INDEX, MENU_SELECTED_COLOR_PAIR_INDEX, TILE_SIZE
+from ..config import CORRECT_LETTER_COLOR_PAIR_INDEX, EXISTS_LETTER_COLOR_PAIR_INDEX, INCORRECT_LETTER_COLOR_PAIR_INDEX, NORMAL_LETTER_COLOR_PAIR_INDEX, TILE_SIZE
 
 from .screen import apply_color_pair, remove_color_pair
 
-# support highlight in red color if incorrect
-def generate_game_element(letter, correct=False, exists_in_answer=False):
-    return {'value': letter, 'correct': correct, 'exists_in_answer': exists_in_answer}
+def generate_game_element(letter, correct=False, exists_in_answer=False, incorrect=False):
+    return {'value': letter, 'correct': correct, 'exists_in_answer': exists_in_answer, 'incorrect': incorrect}
 
 
 def pad_letter_with_spaces_to_match_tile_size(letter: str):
@@ -27,6 +26,7 @@ def get_word_letters_marked(word_letters_elements, chosen_word):
         letter = word_letters[i]
         correct = False
         exists_in_answer = False
+        incorrect = False
 
         if letter == chosen_word[i] and letters_count_in_chosen_word[letter] > 0:
             correct = True
@@ -35,7 +35,10 @@ def get_word_letters_marked(word_letters_elements, chosen_word):
             exists_in_answer = True
             letters_count_in_chosen_word[letter] -= 1
 
-        marked_letter = generate_game_element(letter, correct, exists_in_answer)
+        if not correct and not exists_in_answer:
+            incorrect = True
+
+        marked_letter = generate_game_element(letter, correct, exists_in_answer, incorrect)
         marked_word_letters.append(marked_letter)
 
     return marked_word_letters
@@ -44,14 +47,16 @@ def get_word_letters_marked(word_letters_elements, chosen_word):
 def draw_square(stdscr: 'curses._CursesWindow', i, j, element, board_size, offset):
     height, width = stdscr.getmaxyx()
 
-    value, correct, exists_in_answer = element['value'], element['correct'], element['exists_in_answer']
+    value, correct, exists_in_answer, incorrect = element['value'], element['correct'], element['exists_in_answer'], element['incorrect']
 
     if correct:
         apply_color_pair(stdscr, CORRECT_LETTER_COLOR_PAIR_INDEX)
+    elif incorrect:
+        apply_color_pair(stdscr, INCORRECT_LETTER_COLOR_PAIR_INDEX)
     elif exists_in_answer:
         apply_color_pair(stdscr, EXISTS_LETTER_COLOR_PAIR_INDEX)
     else:
-        apply_color_pair(stdscr, MENU_SELECTED_COLOR_PAIR_INDEX)
+        apply_color_pair(stdscr, NORMAL_LETTER_COLOR_PAIR_INDEX)
 
     x = int((width / 2) - TILE_SIZE * (board_size - 0.5 - 2 * i)) + offset
     y = int((height / 2) - (board_size - 0.5 - 2 * j))
@@ -62,9 +67,10 @@ def draw_square(stdscr: 'curses._CursesWindow', i, j, element, board_size, offse
     padded_letter = pad_letter_with_spaces_to_match_tile_size(value)
     stdscr.addstr(y, x, padded_letter)
 
-    remove_color_pair(stdscr, MENU_SELECTED_COLOR_PAIR_INDEX)
+    remove_color_pair(stdscr, NORMAL_LETTER_COLOR_PAIR_INDEX)
     remove_color_pair(stdscr, CORRECT_LETTER_COLOR_PAIR_INDEX)
     remove_color_pair(stdscr, EXISTS_LETTER_COLOR_PAIR_INDEX)
+    remove_color_pair(stdscr, INCORRECT_LETTER_COLOR_PAIR_INDEX)
 
 
 def draw_game_board(stdscr: 'curses._CursesWindow', game_board, offset = 0):
