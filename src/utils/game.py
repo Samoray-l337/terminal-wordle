@@ -4,9 +4,9 @@ from ..config import CORRECT_LETTER_COLOR_PAIR_INDEX, EXISTS_LETTER_COLOR_PAIR_I
 
 from .screen import apply_color_pair, remove_color_pair
 
-# check for typos + support highlight in red color if incorrect
-def generate_game_element(letter, is_correct=False, is_exists=False):
-    return {'value': letter, 'is_correct': is_correct, 'is_exists': is_exists}
+# support highlight in red color if incorrect
+def generate_game_element(letter, correct=False, exists_in_answer=False):
+    return {'value': letter, 'correct': correct, 'exists_in_answer': exists_in_answer}
 
 
 def pad_letter_with_spaces_to_match_tile_size(letter: str):
@@ -25,17 +25,17 @@ def get_word_letters_marked(word_letters_elements, chosen_word):
 
     for i in range(len(word_letters)):
         letter = word_letters[i]
-        is_correct = False
-        is_exists = False
+        correct = False
+        exists_in_answer = False
 
         if letter == chosen_word[i] and letters_count_in_chosen_word[letter] > 0:
-            is_correct = True
+            correct = True
             letters_count_in_chosen_word[letter] -= 1
         elif letter in chosen_word and letters_count_in_chosen_word[letter] > 0:
-            is_exists = True
+            exists_in_answer = True
             letters_count_in_chosen_word[letter] -= 1
 
-        marked_letter = generate_game_element(letter, is_correct, is_exists)
+        marked_letter = generate_game_element(letter, correct, exists_in_answer)
         marked_word_letters.append(marked_letter)
 
     return marked_word_letters
@@ -44,11 +44,11 @@ def get_word_letters_marked(word_letters_elements, chosen_word):
 def draw_square(stdscr: 'curses._CursesWindow', i, j, element, board_size, offset):
     height, width = stdscr.getmaxyx()
 
-    value, is_correct, is_exists = element['value'], element['is_correct'], element['is_exists']
+    value, correct, exists_in_answer = element['value'], element['correct'], element['exists_in_answer']
 
-    if is_correct:
+    if correct:
         apply_color_pair(stdscr, CORRECT_LETTER_COLOR_PAIR_INDEX)
-    elif is_exists:
+    elif exists_in_answer:
         apply_color_pair(stdscr, EXISTS_LETTER_COLOR_PAIR_INDEX)
     else:
         apply_color_pair(stdscr, MENU_SELECTED_COLOR_PAIR_INDEX)
