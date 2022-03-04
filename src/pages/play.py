@@ -15,19 +15,20 @@ from threading import Timer
 
 animate_mode = False
 
+def stop_animation():
+    global animate_mode
+
+    animate_mode = not animate_mode
+    
+
 def start_invalid_word_animation():
     global animate_mode
 
     animate_mode = True
 
-    stop_animation_timer = Timer(INVALID_WORD_ANIMATION_TIME, toggle_animation_mode)
+    stop_animation_timer = Timer(INVALID_WORD_ANIMATION_TIME, stop_animation)
     stop_animation_timer.start()
 
-
-def toggle_animation_mode():
-    global animate_mode
-
-    animate_mode = not animate_mode
 
 def draw_page(stdscr: 'curses._CursesWindow', game_board, game_board_offset = 0):
     draw_game_board(stdscr, game_board, game_board_offset)
