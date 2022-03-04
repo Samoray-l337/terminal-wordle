@@ -15,6 +15,15 @@ from threading import Timer
 
 animate_mode = False
 
+def start_invalid_word_animation():
+    global animate_mode
+
+    animate_mode = True
+
+    stop_animation_timer = Timer(INVALID_WORD_ANIMATION_TIME, toggle_animation_mode)
+    stop_animation_timer.start()
+
+
 def toggle_animation_mode():
     global animate_mode
 
@@ -78,10 +87,7 @@ def play(stdscr: 'curses._CursesWindow'):
             if current_letter == BOARD_SIZE:
                 curr_word = ''.join([element['value'] for element in game_board[current_word]])
                 if not does_word_exists_inside_words_list(curr_word):
-                    animate_mode = True
-
-                    stop_animation_timer = Timer(INVALID_WORD_ANIMATION_TIME, toggle_animation_mode)
-                    stop_animation_timer.start()
+                    start_invalid_word_animation()
                     continue
 
                 curr_word_marked = get_word_letters_marked(game_board[current_word], chosen_word=CHOSEN_WORD)
