@@ -31,7 +31,7 @@ def get_random_boolean():
 
 
 def generate_random_letters_gameboard(size):
-    return [[generate_game_element(choice(ascii_letters), get_random_boolean(), get_random_boolean()) for _ in range(size)] for _ in range(size)]
+    return [[generate_game_element(choice(ascii_letters), get_random_boolean(), get_random_boolean(), get_random_boolean()) for _ in range(size)] for _ in range(size)]
 
 
 def home(stdscr: 'curses._CursesWindow'):
