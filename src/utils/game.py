@@ -18,29 +18,27 @@ def get_counting_dict(word):
 
 # TODO: this function is not marking well, for an example for the guess 'where' (chosen word: crane), the first e will be yellow and the last e will be red
 def get_word_letters_marked(word_letters_elements, chosen_word):
-    marked_word_letters = []
+    marked_word_letters = [element for element in word_letters_elements]
 
     word_letters = [element['value'] for element in word_letters_elements]
     letters_count_in_chosen_word = get_counting_dict(chosen_word)
 
-    for i in range(len(word_letters)):
-        letter = word_letters[i]
-        correct = False
-        exists_in_answer = False
-        incorrect = False
+    # mark true letters first (green)
+    for index, chosen_word_letter in enumerate(chosen_word):
+        if word_letters[index] == chosen_word_letter and letters_count_in_chosen_word[chosen_word_letter] > 0:
+            marked_word_letters[index]['correct'] = True
+            letters_count_in_chosen_word[chosen_word_letter] -= 1
 
-        if letter == chosen_word[i] and letters_count_in_chosen_word[letter] > 0:
-            correct = True
+    # mark letters that exists in the chosen word
+    for index, letter in enumerate(word_letters):
+        if letter in chosen_word and letters_count_in_chosen_word[letter] > 0:
+            marked_word_letters[index]['exists_in_answer'] = True
             letters_count_in_chosen_word[letter] -= 1
-        elif letter in chosen_word and letters_count_in_chosen_word[letter] > 0:
-            exists_in_answer = True
-            letters_count_in_chosen_word[letter] -= 1
 
-        if not correct and not exists_in_answer:
-            incorrect = True
-
-        marked_letter = generate_game_element(letter, correct, exists_in_answer, incorrect)
-        marked_word_letters.append(marked_letter)
+    # mark incorrect letters (doesnt exists in the chosen word)
+    for index, marked_letter in enumerate(marked_word_letters):
+        if marked_letter['correct'] == False and marked_letter['exists_in_answer'] == False:
+            marked_word_letters[index]['incorrect'] = True
 
     return marked_word_letters
 
