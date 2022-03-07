@@ -16,7 +16,6 @@ def get_counting_dict(word):
     return {item: word.count(item) for item in set(word)}
 
 
-# TODO: this function is not marking well, for an example for the guess 'where' (chosen word: crane), the first e will be yellow and the last e will be red
 def get_word_letters_marked(word_letters_elements, chosen_word):
     marked_word_letters = [element for element in word_letters_elements]
 
