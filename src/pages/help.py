@@ -4,6 +4,8 @@ from time import sleep
 
 from pynput.keyboard import Key, Listener
 
+from ..config import HELP_PAGE_MESSAGE
+
 from ..top_bar import draw_top_bar
 
 back_to_home = False
@@ -19,6 +21,15 @@ def handle_key_pressed(key):
         pass
 
 
+def draw_help_information(stdscr: 'curses._CursesWindow'):
+    h, w = stdscr.getmaxyx()
+
+    x = w // 2 - (len(HELP_PAGE_MESSAGE) // 2)
+    y = h // 2
+
+    stdscr.addstr(y, x, HELP_PAGE_MESSAGE)
+
+
 def help(stdscr: 'curses._CursesWindow'):
     global back_to_home
 
@@ -32,11 +43,11 @@ def help(stdscr: 'curses._CursesWindow'):
             back_to_home = False
             break
 
-        stdscr.addstr(0, 0, 'Help')
         draw_top_bar(stdscr)
+        draw_help_information(stdscr)
 
         stdscr.refresh()
-        
+
         sleep(0.2)
 
     listener.stop()

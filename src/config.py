@@ -27,3 +27,6 @@ INVALID_WORD_ANIMATION_TIME = 0.3
 # Words settings:
 WORDS_LIST_FILE_PATH = './assests/words.txt'
 CHOSEN_WORD = 'crane'
+
+# Help page
+HELP_PAGE_MESSAGE = 'game rules!'
