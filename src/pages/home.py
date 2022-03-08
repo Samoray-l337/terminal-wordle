@@ -48,11 +48,10 @@ def home(stdscr: 'curses._CursesWindow'):
             break
 
         array = generate_random_letters_gameboard(BOARD_SIZE)
+        draw_top_bar(stdscr)
         draw_game_board(stdscr, array)
 
-        draw_top_bar(stdscr)
-
         stdscr.refresh()
-        sleep(0.5)
+        sleep(0.3)
 
     listener.stop()

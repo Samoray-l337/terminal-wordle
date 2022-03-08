@@ -47,7 +47,6 @@ def help(stdscr: 'curses._CursesWindow'):
         draw_help_information(stdscr)
 
         stdscr.refresh()
-
         sleep(0.2)
 
     listener.stop()
