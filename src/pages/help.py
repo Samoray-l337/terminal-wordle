@@ -33,11 +33,10 @@ def help(stdscr: 'curses._CursesWindow'):
             break
 
         stdscr.addstr(0, 0, 'Help')
-        stdscr.refresh()
-
         draw_top_bar(stdscr)
 
         stdscr.refresh()
+        
         sleep(0.2)
 
     listener.stop()
