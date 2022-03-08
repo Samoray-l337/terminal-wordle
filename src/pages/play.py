@@ -4,9 +4,9 @@ import curses
 from string import ascii_lowercase
 from time import sleep
 
-from ..utils.words import does_word_exists_inside_words_list
+from ..utils.words import does_word_exists_inside_words_list, pick_random_word
 
-from ..config import BOARD_SIZE, CHOSEN_WORD, CTRL_BACKSPACE_VALUE, ENTER_KEY_OPTIONS, INVALID_WORD_ANIMATION_TIME
+from ..config import BOARD_SIZE, CTRL_BACKSPACE_VALUE, ENTER_KEY_OPTIONS, INVALID_WORD_ANIMATION_TIME
 from ..utils.game import draw_game_board, generate_game_element, get_word_letters_marked
 
 from ..top_bar import draw_top_bar
@@ -50,6 +50,8 @@ def play(stdscr: 'curses._CursesWindow'):
     offset = 0
     animation_speed = 1
 
+    chosen_word = pick_random_word()
+
     while True:
         stdscr.clear()
         draw_page(stdscr, game_board)
@@ -91,7 +93,7 @@ def play(stdscr: 'curses._CursesWindow'):
                     start_invalid_word_animation()
                     continue
 
-                curr_word_marked = get_word_letters_marked(game_board[current_word], chosen_word=CHOSEN_WORD)
+                curr_word_marked = get_word_letters_marked(game_board[current_word], chosen_word)
                 game_board[current_word] = curr_word_marked
 
                 current_word += 1
