@@ -29,4 +29,4 @@ WORDS_LIST_FILE_PATH = './assests/words.txt'
 CHOSEN_WORD = 'crane'
 
 # Help page
-HELP_PAGE_MESSAGE = 'game rules!'
+HELP_PAGE_MESSAGES = ['Help:', 'To navigate between pages use the arrow keys + enter', 'To go back press ctrl+backspace (or q inside this page)']
