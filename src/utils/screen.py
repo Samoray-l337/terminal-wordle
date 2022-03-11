@@ -28,12 +28,14 @@ def init_color_pairs():
 
 def start_screen_settings(stdscr: 'curses._CursesWindow'):
     curses.curs_set(0)
+    curses.mousemask(1)
 
     init_color_pairs()
 
 
 def close_screen_settings():
     curses.curs_set(1)
+    curses.mousemask(0)
 
 
 def apply_color_pair(stdscr: 'curses._CursesWindow', index: 'int'):

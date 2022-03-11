@@ -5,7 +5,7 @@ from .utils.screen import apply_color_pair, remove_color_pair
 from .config import MENU_COLOR_PAIR_INDEX, MENU_OPTIONS, MENU_SELECTED_COLOR_PAIR_INDEX
 
 
-menu_functions = [home.home, play.play, help.help]
+menu_functions = {'Home': home.home, 'Play': play.play, 'Help': help.help}
 
 
 def show_menu(stdscr: 'curses._CursesWindow', selected_row_index=0):
